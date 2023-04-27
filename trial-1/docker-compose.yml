@@ -1,0 +1,27 @@
+version: '1'
+
+services:
+    myflaskapp:
+        build:
+          context: ./myflaskapp
+        container_name: myflaskapp
+        hostname: myflaskapp
+        ports:
+            - "5000:5000" 
+        networks:
+            - mynetwork  
+    nginx:
+        build:
+          context: ./nginx
+        container_name: nginx
+        hostname: nginx
+        ports:
+            - "80:80" 
+        depends_on:
+            - myflaskapp
+        networks:
+            - mynetwork
+
+networks:
+  mynetwork:
+    external: true
